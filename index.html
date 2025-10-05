@@ -172,10 +172,14 @@
             z-index: 998;
             transform: translateY(400px);
             transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            opacity: 0;
+            visibility: hidden;
         }
 
         .music-player.active {
             transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
         }
 
         .music-toggle {
@@ -1379,9 +1383,7 @@
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
 
-
-
-    <!-- Music Player -->
+    <!-- Music Player - Hidden by default -->
     <div class="music-player" id="musicPlayer">
         <div class="music-header">
             <div class="music-title">Playlist</div>
@@ -1390,15 +1392,6 @@
             </button>
         </div>
         <div class="playlist" id="playlist">
-            <div class="track" data-src="still with you.mp3">
-                <div class="track-play-btn">
-                    <i class="fas fa-play"></i>
-                </div>
-                <div class="track-info">
-                    <div class="track-name">Still With You</div>
-                    <div class="track-artist">Jungkook</div>
-                </div>
-            </div>
             <div class="track" data-src="yours.mp3">
                 <div class="track-play-btn">
                     <i class="fas fa-play"></i>
@@ -1408,13 +1401,22 @@
                     <div class="track-artist">Jason Mraz</div>
                 </div>
             </div>
-            <div class="track" data-src="no 1 party.mp3">
+            <div class="track" data-src="still with you.mp3">
                 <div class="track-play-btn">
                     <i class="fas fa-play"></i>
                 </div>
                 <div class="track-info">
-                    <div class="track-name">No. 1 Party Anthem</div>
-                    <div class="track-artist">Arctic Monkeys</div>
+                    <div class="track-name">Still With You</div>
+                    <div class="track-artist">Jungkook</div>
+                </div>
+            </div>
+            <div class="track" data-src="yasudalah.mp3">
+                <div class="track-play-btn">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div class="track-info">
+                    <div class="track-name">Yasudalah</div>
+                    <div class="track-artist">Bondan Prakoso</div>
                 </div>
             </div>
             <div class="track" data-src="tunggu apalagi.mp3">
@@ -1426,13 +1428,13 @@
                     <div class="track-artist">Nyoman Paul</div>
                 </div>
             </div>
-            <div class="track" data-src="yasudalah.mp3">
+            <div class="track" data-src="no 1 party.mp3">
                 <div class="track-play-btn">
                     <i class="fas fa-play"></i>
                 </div>
                 <div class="track-info">
-                    <div class="track-name">Yasudalah</div>
-                    <div class="track-artist">Bondan Prakoso</div>
+                    <div class="track-name">No. 1 Party Anthem</div>
+                    <div class="track-artist">Arctic Monkeys</div>
                 </div>
             </div>
         </div>
@@ -1462,10 +1464,7 @@
         </div>
     </div>
 
-    <!-- Music Toggle Button -->
-    <div class="music-toggle" id="musicToggle">
-        <i class="fas fa-music"></i>
-    </div>
+
 
     <!-- Back to Top Button -->
     <div class="back-to-top" id="backToTop">
@@ -1514,7 +1513,7 @@
             </div>
             <div class="about-content">
                 <div class="about-text">
-                    <p>Saya adalah MUHAMMAD FATURRAHMAN, seorang web developer muda yang bersemangat dalam menciptakan pengalaman digital yang menarik dan fungsional. Saat ini saya berusia 15 tahun dan sedang menempuh pendidikan di SMK Infokom Bogor jurusan Rekayasa Perangkat Lunak.</p>
+                    <p>Saya adalah MUHAMMAD FATURRAHMAN, seorang web developer muda yang bersemangat dalam menciptakan pengalaman digital yang menarik dan fungsional. Saat ini saya berusia 16 tahun dan sedang menempuh pendidikan di SMK Infokom Bogor jurusan Rekayasa Perangkat Lunak.</p>
                     <p>Saya memiliki minat besar dalam pengembangan web dan desain UI/UX. Meskipun masih dalam tahap pembelajaran, saya berkomitmen untuk terus mengasah kemampuan dan mengikuti perkembangan teknologi terkini.</p>
                     <p>Saya percaya bahwa kombinasi antara kreativitas dan teknis skill adalah kunci untuk menciptakan solusi digital yang inovatif dan user-friendly.</p>
                 </div>
@@ -1927,7 +1926,7 @@
             }
         });
 
-        // Music Player - Enhanced
+        // Music Player - Enhanced with hidden playlist
         const musicPlayer = document.getElementById('musicPlayer');
         const musicToggle = document.getElementById('musicToggle');
         const closePlayer = document.getElementById('closePlayer');
@@ -1942,6 +1941,7 @@
         
         let currentTrackIndex = 0;
         let isPlaying = false;
+        let playerVisible = false;
         
         // Create audio element
         const audio = new Audio();
@@ -2053,13 +2053,20 @@
             }
         });
         
-        // Toggle music player visibility
+        // Toggle music player visibility - FIXED
         musicToggle.addEventListener('click', () => {
-            musicPlayer.classList.add('active');
+            if (!playerVisible) {
+                musicPlayer.classList.add('active');
+                playerVisible = true;
+            } else {
+                musicPlayer.classList.remove('active');
+                playerVisible = false;
+            }
         });
         
         closePlayer.addEventListener('click', () => {
             musicPlayer.classList.remove('active');
+            playerVisible = false;
         });
         
         // Initialize music player
@@ -2088,5 +2095,4 @@
         });
     </script>
 </body>
-
 </html>
